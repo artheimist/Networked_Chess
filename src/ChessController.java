@@ -88,7 +88,10 @@ public class ChessController implements ChessInterface, ActionListener {
         chessBoardPanel.repaint();
         if (printWriter != null) {
             printWriter.println(fromCol + "," + fromRow + "," + toCol + "," + toRow);
+            checkWin();
         }
+        System.out.println("black :"+chessModel.getBlack()+" white :"+chessModel.getWhite());
+        checkWin();
     }
 
     private void receiveMove(Scanner scanner) {
@@ -130,6 +133,7 @@ public class ChessController implements ChessInterface, ActionListener {
     }
 
     private void runSocketClient() {
+
         try {
             socket = new Socket(SOCKET_SERVER_ADDR, PORT);
             System.out.println("client connected to port " + PORT);
@@ -144,6 +148,15 @@ public class ChessController implements ChessInterface, ActionListener {
             });
         } catch (IOException e1) {
             e1.printStackTrace();
+        }
+    }
+    public void checkWin(){
+        Boolean winBlack=false,winWhite=false;
+        if(chessModel.getWhite()==0){
+            JOptionPane.showMessageDialog(frame," Black Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
+        }else if(chessModel.getBlack()==0){
+            JOptionPane.showMessageDialog(frame," White Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
+            frame.dispose();
         }
     }
 

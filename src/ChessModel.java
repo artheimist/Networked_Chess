@@ -6,6 +6,8 @@ public class ChessModel {
     private Set<ChessPieces> piecesBox = new HashSet<ChessPieces>();
     private Player playerInTurn = Player.WHITE;
 
+    private int black=0,white=0;
+
     void reset() {
         piecesBox.removeAll(piecesBox);
 
@@ -29,7 +31,7 @@ public class ChessModel {
         piecesBox.add(new ChessPieces(3, 0, Player.WHITE, Rank.QUEEN, ChessName.wQueen));
         piecesBox.add(new ChessPieces(4, 7, Player.BLACK, Rank.KING, ChessName.bKing));
         piecesBox.add(new ChessPieces(4, 0, Player.WHITE, Rank.KING, ChessName.wKing));
-
+        countPieces();
         playerInTurn = Player.WHITE;
     }
 
@@ -44,6 +46,11 @@ public class ChessModel {
             if (target.getPlayer() == movingPiece.getPlayer()) {
                 return;
             } else {
+                if(target.getPlayer()==Player.WHITE){
+                    white--;
+                }else{
+                    black--;
+                }
                 piecesBox.remove(target);
             }
         }
@@ -60,6 +67,23 @@ public class ChessModel {
             }
         }
         return null;
+    }
+    public void countPieces(){
+        for (ChessPieces pieces: piecesBox){
+            if(pieces.getPlayer()==Player.WHITE){
+                white++;
+            }else {
+                black++;
+            }
+        }
+    }
+
+    public int getBlack() {
+        return black;
+    }
+
+    public int getWhite() {
+        return white;
     }
 
     @Override

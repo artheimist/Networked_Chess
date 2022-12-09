@@ -18,8 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class ChessController implements ChessInterface, ActionListener {
-    private String SOCKET_SERVER_ADDR = "localhost";
-    private int PORT = 50000;
 
     private ChessModel chessModel = new ChessModel();
 
@@ -88,7 +86,6 @@ public class ChessController implements ChessInterface, ActionListener {
         chessBoardPanel.repaint();
         if (printWriter != null) {
             printWriter.println(fromCol + "," + fromRow + "," + toCol + "," + toRow);
-            checkWin();
         }
         System.out.println("black :"+chessModel.getBlack()+" white :"+chessModel.getWhite());
         checkWin();
@@ -113,33 +110,36 @@ public class ChessController implements ChessInterface, ActionListener {
         }
     }
 
-    private void runSocketServer() {
+    private void runSocketServer(int port) {
         Executors.newFixedThreadPool(1).execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    listener = new ServerSocket(PORT);
-                    System.out.println("server is listening on port " + PORT);
+                    listener = new ServerSocket(port);
+                    serverBtn.setEnabled(false);
+                    clientBtn.setEnabled(false);
+                    JOptionPane.showMessageDialog(frame, "listening on port " + port);
                     socket = listener.accept();
                     System.out.println("connected from " + socket.getInetAddress());
                     printWriter = new PrintWriter(socket.getOutputStream(), true);
                     var scanner = new Scanner(socket.getInputStream());
                     receiveMove(scanner);
+
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, "Failed " + port,"failed",JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
     }
 
-    private void runSocketClient() {
-
+    private void runSocketClient(String addres,int port) {
         try {
-            socket = new Socket(SOCKET_SERVER_ADDR, PORT);
-            System.out.println("client connected to port " + PORT);
+            socket = new Socket(addres, port);
+            serverBtn.setEnabled(false);
+            clientBtn.setEnabled(false);
+            JOptionPane.showMessageDialog(frame, "connected to port " + port);
             var scanner = new Scanner(socket.getInputStream());
             printWriter = new PrintWriter(socket.getOutputStream(), true);
-
             Executors.newFixedThreadPool(1).execute(new Runnable() {
                 @Override
                 public void run() {
@@ -147,16 +147,15 @@ public class ChessController implements ChessInterface, ActionListener {
                 }
             });
         } catch (IOException e1) {
-            e1.printStackTrace();
+           JOptionPane.showMessageDialog(frame,"Invalid Port", "failed", JOptionPane.WARNING_MESSAGE);
         }
     }
     public void checkWin(){
         Boolean winBlack=false,winWhite=false;
         if(chessModel.getWhite()==0){
             JOptionPane.showMessageDialog(frame," Black Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
-        }else if(chessModel.getBlack()==0){
+        }if(chessModel.getBlack()==0){
             JOptionPane.showMessageDialog(frame," White Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
-            frame.dispose();
         }
     }
 
@@ -171,6 +170,7 @@ public class ChessController implements ChessInterface, ActionListener {
                 }
                 if (socket != null) {
                     socket.close();
+                    JOptionPane.showMessageDialog(frame,"DISCONNECTED","Disconnected",JOptionPane.WARNING_MESSAGE);
                 }
                 serverBtn.setEnabled(true);
                 clientBtn.setEnabled(true);
@@ -178,17 +178,15 @@ public class ChessController implements ChessInterface, ActionListener {
                 e1.printStackTrace();
             }
         } else if (e.getSource() == serverBtn) {
-            serverBtn.setEnabled(false);
-            clientBtn.setEnabled(false);
+
+            int port= Integer.parseInt(JOptionPane.showInputDialog(frame, "Please Input Current Port to Create New Game","ex : 500"));
             frame.setTitle("Chess Server");
-            runSocketServer();
-            JOptionPane.showMessageDialog(frame, "listening on port " + PORT);
+            runSocketServer(port);
         } else if (e.getSource() == clientBtn) {
-            serverBtn.setEnabled(false);
-            clientBtn.setEnabled(false);
             frame.setTitle("Chess Client");
-            runSocketClient();
-            JOptionPane.showMessageDialog(frame, "connected to port " + PORT);
+            String address=(JOptionPane.showInputDialog(frame, "Please Input Destination Address","ex : localhost"));
+            int port= Integer.parseInt(JOptionPane.showInputDialog(frame, "Please Input Destination Port","ex : 500"));
+            runSocketClient(address,port);
         }
     }
 }

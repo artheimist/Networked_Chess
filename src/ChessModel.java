@@ -77,7 +77,9 @@ public class ChessModel {
             }
         }
     }
+    public void rules(){
 
+    }
     public int getBlack() {
         return black;
     }

@@ -143,6 +143,7 @@ public class ChessView extends JPanel implements MouseListener, MouseMotionListe
 
         movingPiece = null;
         movingPiecePoint = null;
+        repaint();
     }
 
     @Override

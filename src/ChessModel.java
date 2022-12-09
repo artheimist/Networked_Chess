@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ public class ChessModel {
     private Player playerInTurn = Player.WHITE;
 
     private int black=0,white=0;
+    private boolean kingWhite=true,kingBlack=true;
 
     void reset() {
         piecesBox.removeAll(piecesBox);
@@ -56,7 +58,23 @@ public class ChessModel {
         }
 
         piecesBox.remove(movingPiece);
-        piecesBox.add(new ChessPieces(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.getName()));
+        //bug
+        movingPiece.setCol(toCol);
+        movingPiece.setRow(toRow);
+        //
+        if(movingPiece.getRank()==Rank.PAWN && movingPiece.getRow() == 7 ||movingPiece.getRank()==Rank.PAWN && movingPiece.getRow() == 0) {
+            String color="";
+            if (movingPiece.getPlayer()==Player.WHITE){
+                color="w";
+                Promote(movingPiece,toCol,toRow,color);
+            }else if (movingPiece.getPlayer()==Player.BLACK) {
+                color="b";
+                Promote(movingPiece,toCol,toRow,color);
+            }
+        }else{
+            piecesBox.add(new ChessPieces(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.getName()));
+        }
+
         playerInTurn = playerInTurn == Player.WHITE ? Player.BLACK : Player.WHITE;
     }
 
@@ -69,16 +87,54 @@ public class ChessModel {
         return null;
     }
     public void countPieces(){
+        black=0;
+        white=0;
         for (ChessPieces pieces: piecesBox){
             if(pieces.getPlayer()==Player.WHITE){
                 white++;
-            }else {
+            }else if(pieces.getPlayer()==Player.BLACK){
                 black++;
             }
         }
+        checkKing();
     }
-    public void rules(){
-
+    public void checkKing(){
+        for (ChessPieces pieces: piecesBox){
+            if(pieces.getRank()==Rank.KING) {
+                if (pieces.getPlayer() == Player.WHITE) {
+                    kingWhite = true;
+                } else if (pieces.getPlayer() == Player.BLACK) {
+                    kingBlack = true;
+                }
+            }else{
+                kingWhite=false;
+                kingBlack=false;
+            }
+        }
+    }
+    public void Promote(ChessPieces movePiece, int toCol, int toRow, String color){
+        String promote=JOptionPane.showInputDialog("Promote Pawn", "example : queen");
+        if(color.equals("w")) {
+            if (promote.toLowerCase().equals("queen")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.QUEEN, ChessName.wQueen));
+            } else if (promote.toLowerCase().equals("rook")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.ROOK, ChessName.wRook));
+            } else if (promote.toLowerCase().equals("bishop")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.BISHOP, ChessName.wBishop));
+            } else if (promote.toLowerCase().equals("knight")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.KNIGHT, ChessName.wKnight));
+            }
+        }else{
+            if (promote.toLowerCase().equals("queen")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.QUEEN, ChessName.bQueen));
+            } else if (promote.toLowerCase().equals("rook")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.ROOK, ChessName.bRook));
+            } else if (promote.toLowerCase().equals("bishop")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.BISHOP, ChessName.bBishop));
+            } else if (promote.toLowerCase().equals("knight")) {
+                piecesBox.add(new ChessPieces(toCol, toRow, movePiece.getPlayer(), Rank.KNIGHT, ChessName.bKnight));
+            }
+        }
     }
     public int getBlack() {
         return black;
@@ -86,6 +142,14 @@ public class ChessModel {
 
     public int getWhite() {
         return white;
+    }
+
+    public boolean isKingBlack() {
+        return kingBlack;
+    }
+
+    public boolean isKingWhite() {
+        return kingWhite;
     }
 
     @Override
@@ -128,4 +192,5 @@ public class ChessModel {
 
         return desc;
     }
+
 }

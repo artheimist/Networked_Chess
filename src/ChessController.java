@@ -11,11 +11,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class ChessController implements ChessInterface, ActionListener {
 
@@ -27,6 +23,8 @@ public class ChessController implements ChessInterface, ActionListener {
     private JButton serverBtn;
     private JButton clientBtn;
 
+    private JLabel black,white,inTurn;
+
     private ServerSocket listener;
     private Socket socket;
     private PrintWriter printWriter;
@@ -35,7 +33,7 @@ public class ChessController implements ChessInterface, ActionListener {
         chessModel.reset();
 
         frame = new JFrame("Chess");
-        frame.setSize(400, 450);
+        frame.setSize(350, 430);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
@@ -57,6 +55,20 @@ public class ChessController implements ChessInterface, ActionListener {
         clientBtn.addActionListener(this);
 
         frame.add(buttonsPanel, BorderLayout.PAGE_END);
+
+        //label
+        var blackPane= new JPanel(new FlowLayout(FlowLayout.CENTER));
+        black= new JLabel("black :"+ chessModel.getBlack());
+        inTurn= new JLabel("            WHITE TURN            ");
+        white= new JLabel("white :"+chessModel.getWhite());
+        blackPane.add(black);
+        blackPane.add(inTurn);
+        blackPane.add(white);
+
+
+        //
+        frame.add(blackPane, BorderLayout.PAGE_START);
+
 
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,11 +163,16 @@ public class ChessController implements ChessInterface, ActionListener {
         }
     }
     public void checkWin(){
-        Boolean winBlack=false,winWhite=false;
-        if(chessModel.getWhite()==0){
+        black.setText("black :"+chessModel.getBlack());
+        white.setText("white :"+chessModel.getWhite());
+        if(chessModel.getWhite()==0 ){
             JOptionPane.showMessageDialog(frame," Black Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
         }if(chessModel.getBlack()==0){
             JOptionPane.showMessageDialog(frame," White Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
+        }
+    }
+    public void Promote(int toCol){
+        if(toCol==7){
         }
     }
 
@@ -178,7 +195,6 @@ public class ChessController implements ChessInterface, ActionListener {
                 e1.printStackTrace();
             }
         } else if (e.getSource() == serverBtn) {
-
             int port= Integer.parseInt(JOptionPane.showInputDialog(frame, "Please Input Current Port to Create New Game","ex : 500"));
             frame.setTitle("Chess Server");
             runSocketServer(port);

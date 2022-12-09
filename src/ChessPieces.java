@@ -54,6 +54,14 @@ public class ChessPieces {
         this.col = col;
     }
 
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setRow(int row) {
         this.row = row;
     }

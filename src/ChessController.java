@@ -45,11 +45,11 @@ public class ChessController implements ChessInterface, ActionListener {
         resetBtn.addActionListener(this);
         buttonsPanel.add(resetBtn);
 
-        serverBtn = new JButton("Listen");
+        serverBtn = new JButton("Create Game");
         buttonsPanel.add(serverBtn);
         serverBtn.addActionListener(this);
 
-        clientBtn = new JButton("Connect");
+        clientBtn = new JButton("Join Game");
         buttonsPanel.add(clientBtn);
         clientBtn.addActionListener(this);
 

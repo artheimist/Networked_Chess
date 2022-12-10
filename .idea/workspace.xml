@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbe4db5d-dfca-435f-ace0-39a98348cd34" name="Changes" comment="adding Promote Pawn to other Ranks when meet certain condition">
+    <list default="true" id="bbe4db5d-dfca-435f-ace0-39a98348cd34" name="Changes" comment="fixing bug when king dies and adding turn">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670592203682</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fixing bug when king dies and adding turn">
+      <created>1670636224099</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670636224099</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,7 +182,8 @@
     <MESSAGE value="adding win condition" />
     <MESSAGE value="adding some dynamic port and address and some improvement UI" />
     <MESSAGE value="adding Promote Pawn to other Ranks when meet certain condition" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding Promote Pawn to other Ranks when meet certain condition" />
+    <MESSAGE value="fixing bug when king dies and adding turn" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing bug when king dies and adding turn" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NETWORKED_CHESS$Client2.ic" NAME="Client2 Coverage Results" MODIFIED="1670076826703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

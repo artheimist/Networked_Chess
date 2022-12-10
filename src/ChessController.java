@@ -24,7 +24,6 @@ public class ChessController implements ChessInterface, ActionListener {
     private JButton clientBtn;
 
     private JLabel black,white,inTurn;
-
     private ServerSocket listener;
     private Socket socket;
     private PrintWriter printWriter;
@@ -94,13 +93,14 @@ public class ChessController implements ChessInterface, ActionListener {
 
     @Override
     public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
-        chessModel.movePiece(fromCol, fromRow, toCol, toRow);
+        chessModel.movePiece(fromCol, fromRow, toCol, toRow, frame);
         chessBoardPanel.repaint();
         if (printWriter != null) {
             printWriter.println(fromCol + "," + fromRow + "," + toCol + "," + toRow);
         }
         System.out.println("black :"+chessModel.getBlack()+" white :"+chessModel.getWhite());
         checkWin();
+        changeTurn();
     }
 
     private void receiveMove(Scanner scanner) {
@@ -115,7 +115,7 @@ public class ChessController implements ChessInterface, ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    chessModel.movePiece(fromCol, fromRow, toCol, toRow);
+                    chessModel.movePiece(fromCol, fromRow, toCol, toRow,frame);
                     chessBoardPanel.repaint();
                 }
             });
@@ -165,14 +165,18 @@ public class ChessController implements ChessInterface, ActionListener {
     public void checkWin(){
         black.setText("black :"+chessModel.getBlack());
         white.setText("white :"+chessModel.getWhite());
-        if(chessModel.getWhite()==0 ){
+        if(chessModel.getWhite()==0){
             JOptionPane.showMessageDialog(frame," Black Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
         }if(chessModel.getBlack()==0){
             JOptionPane.showMessageDialog(frame," White Wins !", " ! Game Over !",JOptionPane.OK_OPTION);
         }
     }
-    public void Promote(int toCol){
-        if(toCol==7){
+
+    public void changeTurn(){
+        if(chessModel.getPlayerInTurn()==Player.WHITE){
+            inTurn.setText("            WHITE TURN            ");
+        }else{
+            inTurn.setText("            BLACK TURN            ");
         }
     }
 

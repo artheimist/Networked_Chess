@@ -37,7 +37,7 @@ public class ChessModel {
         playerInTurn = Player.WHITE;
     }
 
-    void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+    void movePiece(int fromCol, int fromRow, int toCol, int toRow, JFrame frame) {
         ChessPieces movingPiece = pieceAt(fromCol, fromRow);
         if (movingPiece == null || fromCol == toCol && fromRow == toRow) {
             return;
@@ -47,7 +47,18 @@ public class ChessModel {
         if (target != null) {
             if (target.getPlayer() == movingPiece.getPlayer()) {
                 return;
-            } else {
+            }else if (target.getRank()==Rank.KING){
+                if(target.getPlayer()== Player.WHITE){
+                    kingWhite=false;
+                    JOptionPane.showMessageDialog(null, "Black Wins !");
+                }else{
+                    kingBlack=false;
+                    JOptionPane.showMessageDialog(null, "White Wins !");
+                }
+                piecesBox.remove(target);
+                piecesBox.remove(movingPiece);
+                piecesBox.add(new ChessPieces(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.getName()));
+            }else if ( target.getPlayer()!= movingPiece.getPlayer()){
                 if(target.getPlayer()==Player.WHITE){
                     white--;
                 }else{
@@ -56,22 +67,21 @@ public class ChessModel {
                 piecesBox.remove(target);
             }
         }
-
         piecesBox.remove(movingPiece);
         //bug
         movingPiece.setCol(toCol);
         movingPiece.setRow(toRow);
         //
-        if(movingPiece.getRank()==Rank.PAWN && movingPiece.getRow() == 7 ||movingPiece.getRank()==Rank.PAWN && movingPiece.getRow() == 0) {
-            String color="";
-            if (movingPiece.getPlayer()==Player.WHITE){
-                color="w";
-                Promote(movingPiece,toCol,toRow,color);
-            }else if (movingPiece.getPlayer()==Player.BLACK) {
-                color="b";
-                Promote(movingPiece,toCol,toRow,color);
+        if (movingPiece.getRank() == Rank.PAWN && movingPiece.getRow() == 7 || movingPiece.getRank() == Rank.PAWN && movingPiece.getRow() == 0) {
+            String color = "";
+            if (movingPiece.getPlayer() == Player.WHITE) {
+                color = "w";
+                Promote(movingPiece, toCol, toRow, color);
+            } else if (movingPiece.getPlayer() == Player.BLACK) {
+                color = "b";
+                Promote(movingPiece, toCol, toRow, color);
             }
-        }else{
+        } else {
             piecesBox.add(new ChessPieces(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.getName()));
         }
 
@@ -96,7 +106,6 @@ public class ChessModel {
                 black++;
             }
         }
-        checkKing();
     }
     public void checkKing(){
         for (ChessPieces pieces: piecesBox){
@@ -138,6 +147,10 @@ public class ChessModel {
     }
     public int getBlack() {
         return black;
+    }
+
+    public Player getPlayerInTurn() {
+        return playerInTurn;
     }
 
     public int getWhite() {

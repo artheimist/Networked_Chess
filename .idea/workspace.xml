@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbe4db5d-dfca-435f-ace0-39a98348cd34" name="Changes" comment="">
+    <list default="true" id="bbe4db5d-dfca-435f-ace0-39a98348cd34" name="Changes" comment="adding Promote Pawn to other Ranks when meet certain condition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessPieces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPieces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670572759564</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="adding Promote Pawn to other Ranks when meet certain condition">
+      <created>1670592203682</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1670592203682</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,7 +175,8 @@
     <MESSAGE value="most final" />
     <MESSAGE value="adding win condition" />
     <MESSAGE value="adding some dynamic port and address and some improvement UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding some dynamic port and address and some improvement UI" />
+    <MESSAGE value="adding Promote Pawn to other Ranks when meet certain condition" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding Promote Pawn to other Ranks when meet certain condition" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NETWORKED_CHESS$Client2.ic" NAME="Client2 Coverage Results" MODIFIED="1670076826703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
